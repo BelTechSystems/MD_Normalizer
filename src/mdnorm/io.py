@@ -1,7 +1,36 @@
-# Copyright (c) 2026 BelTech Systems LLC
-# SPDX-License-Identifier: MIT
+# ============================================================
+# FILE:          io.py
+# PROJECT:       MD Normalizer
+# BRIEF:         Provides UTF-8 input reading and output writing with overwrite safety.
+# DOCUMENT:      docs/tool_framework.md; README.md
+# REQUIREMENTS:  support-only; no formal requirement IDs assigned for v0.1.0
+# COPYRIGHT:     Copyright (c) 2026 BelTech Systems LLC.
+# LICENSE:       MIT License; see LICENSE in repository root.
+# CLASSIFICATION: OPEN-SOURCE
+# STANDARD:      Python 3.11+
+# FUNCTIONS/CLASSES:
+#   read_input(path)
+#     Reads and validates input file content.
+#   write_output(path, content, force, dry_run)
+#     Writes output with overwrite and dry-run protection.
+#   IoError, InputNotFoundError, EmptyInputError, OutputExistsError
+#     File I/O exception types.
+# DEPENDENCIES:
+#   Standard library: pathlib
+#   Third-party:      none
+#   Internal:         none
+# PORTABILITY:    Supports Python 3.11 or later on Windows, Linux, and macOS.
+# IMPL. STATUS:   IN_REVIEW
+# HISTORY:
+#   2026-05-25  Cursor    [DOCS] Replaced minimal SPDX header with STD-006 style metadata header
+#   2026-05-25  Cursor    [DOCS] Standardized FUNCTIONS/CLASSES label and section ordering
+# ============================================================
 
-"""Input and output file handling."""
+"""Input and output file handling.
+
+The file header above is the authoritative engineering metadata source for
+this module.
+"""
 
 from __future__ import annotations
 

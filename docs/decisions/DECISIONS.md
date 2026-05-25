@@ -48,3 +48,10 @@ MD Normalizer v0.1.0 shall be released publicly under the MIT License with BelTe
 
 Rationale:
 An early public release establishes the deterministic baseline, enables feedback, and documents project intent before adding optional AI-assisted or template-driven features.
+
+## D-008: Adopt STD-006 Python Source Headers
+
+Python source files under `src/mdnorm/` shall use structured BelTech-STD-006 style headers for project identity, open-source governance, dependency visibility, portability, lifecycle status, and append-only history.
+
+Rationale:
+Structured headers make each module reviewable, auditable, and machine-readable. They provide consistent engineering metadata without embedding long license text in source files.

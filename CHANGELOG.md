@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Example inputs and expected output under `examples/`.
 - Pytest test suite covering I/O, parsing, normalization, validation, reporting, and CLI behavior.
 
+### Changed
+
+- Upgraded Python source headers under `src/mdnorm/` to BelTech-STD-006 style metadata headers.
+
 ### Notes
 
 - Version 0.1.0 is an early-stage baseline focused on deterministic formatting.

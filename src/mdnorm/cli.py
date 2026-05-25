@@ -1,7 +1,37 @@
-# Copyright (c) 2026 BelTech Systems LLC
-# SPDX-License-Identifier: MIT
+# ============================================================
+# FILE:          cli.py
+# PROJECT:       MD Normalizer
+# BRIEF:         Provides the command-line interface for normalization and validation.
+# DOCUMENT:      docs/tool_framework.md; README.md; docs/decisions/DECISIONS.md
+# REQUIREMENTS:  support-only; no formal requirement IDs assigned for v0.1.0
+# COPYRIGHT:     Copyright (c) 2026 BelTech Systems LLC.
+# LICENSE:       MIT License; see LICENSE in repository root.
+# CLASSIFICATION: OPEN-SOURCE
+# STANDARD:      Python 3.11+
+# FUNCTIONS:
+#   build_parser()
+#     Builds the argparse command tree for normalize and validate.
+#   run_normalize(args)
+#     Executes normalization, validation, output writing, and optional report writing.
+#   run_validate(args)
+#     Executes validation and emits warnings or errors.
+#   main(argv)
+#     Parses CLI arguments and dispatches subcommands.
+# DEPENDENCIES:
+#   Standard library: argparse, sys
+#   Third-party:      none
+#   Internal:         mdnorm.io, mdnorm.normalizer, mdnorm.reporter, mdnorm.validator
+# PORTABILITY:    Supports Python 3.11 or later on Windows, Linux, and macOS.
+# IMPL. STATUS:   IN_REVIEW
+# HISTORY:
+#   2026-05-25  Cursor    [DOCS] Added STD-006 source metadata header for v0.1.0 release preparation
+# ============================================================
 
-"""Command-line interface for MD Normalizer."""
+"""Command-line interface for MD Normalizer.
+
+The file header above is the authoritative engineering metadata source for
+this module.
+"""
 
 from __future__ import annotations
 
