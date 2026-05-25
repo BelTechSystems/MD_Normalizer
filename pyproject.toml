@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "md-normalizer"
+version = "0.1.0"
+description = "A structure-aware CLI that normalizes rough Markdown into clean, predictable documents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "BelTech Systems LLC" }]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/BelTechSystems/MD_Normalizer"
+Repository = "https://github.com/BelTechSystems/MD_Normalizer.git"
+Issues = "https://github.com/BelTechSystems/MD_Normalizer/issues"
+Changelog = "https://github.com/BelTechSystems/MD_Normalizer/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+mdnorm = "mdnorm.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

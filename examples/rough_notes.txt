@@ -1,0 +1,26 @@
+# Tool Notes
+
+
+Problem:
+Rough notes often mix bullets, spacing, and headings.
+
+
+## Features
+* clean headings
++ normalize bullets
+* fix spacing
+
+
+## Steps
+2. parse input
+4) normalize lines
+9. write output
+
+
+Example code:
+
+```
+  keep indentation
+# not a heading
+- not a list
+```

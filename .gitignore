@@ -1,0 +1,136 @@
+# ── Python ────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# ── Virtual environments ──────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Package / distribution build ─────────────────────────────────────
+*.egg-info/
+dist/
+build/
+*.egg
+MANIFEST
+
+# ── pytest ────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ── pssgen runtime output ─────────────────────────────────────────────
+# Generated testbench files — these are tool output, not source
+out/
+out_smoke/
+out_toml/
+*.ucdb
+node_modules/
+work-obj08.cf
+*.zip
+package*.json
+
+# IR snapshots produced by --dump-ir
+ir.json
+
+# ── API keys — never commit these ────────────────────────────────────
+.env
+.env.*
+*.env
+*.ps1
+
+# ── Vivado / XSIM build artifacts ────────────────────────────────────
+*.jou
+*.log
+*.pb
+*.wdb
+xsim.dir/
+*.str
+webtalk*.xml
+vivado_*.backup.jou
+vivado*.backup.*
+
+# ── Questa / ModelSim artifacts ──────────────────────────────────────
+work/
+transcript
+vsim.wlf
+modelsim.ini
+
+# ── OS artifacts ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editor artifacts ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Windows ───────────────────────────────────────────────────────────
+*.lnk
+# Vivado simulation artifacts
+*.vcd
+dfx_runtime.txt
+xsim.covdb/
+
+# Claude Code and prompt engineering
+Claude.*
+.claude/
+*.prompt.md
+prompt_engineering_guide.local.md
+
+# Claude Code and prompt engineering
+Cursor.*
+.cursor/
+*.prompt.md
+prompt_engineering_guide.local.md
+
+# BelTech internal standards
+docs/internal/
+
+# Removed these since repo is private
+
+# Local development overrides
+pssgen.local.toml
+pssgen_state.local.toml
+.env.local
+
+# Orphaned files (see Task 1 cleanup)
+gen_sds.js
+hdl_style_old.md
+
+
+# Microsoft Office temporary lock files
+~$*
+
+# pssgen output at IP root (belong under tb/)
+ip/*/scripts/
+
+# Generated output — exclude by default
+examples/*/output/
+
+# Explicitly re-include the reference SPI Master output as a committed example
+!examples/axi_lite_spi_master/output/
+!examples/axi_lite_spi_master/output/frs/
+!examples/axi_lite_spi_master/output/frs/SPIM0_FRS.docx
+
+# Python generated
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Claude Code
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db

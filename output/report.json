@@ -1,0 +1,85 @@
+{
+  "input_path": "examples/rough_ai_output.md",
+  "output_path": "output/clean.md",
+  "warnings": [],
+  "errors": [],
+  "changes": [
+    {
+      "line_number": 1,
+      "rule": "trailing_whitespace",
+      "description": "Remove trailing whitespace",
+      "before": "# Markdown Normalizer   ",
+      "after": "# Markdown Normalizer"
+    },
+    {
+      "line_number": 7,
+      "rule": "unordered_list_marker",
+      "description": "Normalize unordered list marker to '-'",
+      "before": "* engineers",
+      "after": "- engineers"
+    },
+    {
+      "line_number": 8,
+      "rule": "unordered_list_marker",
+      "description": "Normalize unordered list marker to '-'",
+      "before": "+ technical writers",
+      "after": "- technical writers"
+    },
+    {
+      "line_number": 13,
+      "rule": "ordered_list_number",
+      "description": "Renumber ordered list item",
+      "before": "3. parse",
+      "after": "1. parse"
+    },
+    {
+      "line_number": 14,
+      "rule": "ordered_list_number",
+      "description": "Renumber ordered list item",
+      "before": "5) normalize",
+      "after": "2. normalize"
+    },
+    {
+      "line_number": 15,
+      "rule": "ordered_list_number",
+      "description": "Renumber ordered list item",
+      "before": "7. validate",
+      "after": "3. validate"
+    },
+    {
+      "line_number": 6,
+      "rule": "blank_line_collapse",
+      "description": "Collapse repeated blank lines",
+      "before": "\n\n",
+      "after": ""
+    },
+    {
+      "line_number": 12,
+      "rule": "blank_line_collapse",
+      "description": "Collapse repeated blank lines",
+      "before": "\n\n",
+      "after": ""
+    },
+    {
+      "line_number": 18,
+      "rule": "blank_line_collapse",
+      "description": "Collapse repeated blank lines",
+      "before": "\n\n",
+      "after": ""
+    },
+    {
+      "line_number": 6,
+      "rule": "heading_blank_after",
+      "description": "Insert blank line after heading",
+      "before": "## Users\n- engineers",
+      "after": "## Users\n\n- engineers"
+    },
+    {
+      "line_number": 12,
+      "rule": "heading_blank_after",
+      "description": "Insert blank line after heading",
+      "before": "## Workflow\n1. parse",
+      "after": "## Workflow\n\n1. parse"
+    }
+  ]
+}
