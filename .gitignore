@@ -24,9 +24,12 @@ MANIFEST
 coverage.xml
 htmlcov/
 
-# ── pssgen runtime output ─────────────────────────────────────────────
-# Generated testbench files — these are tool output, not source
+# ── Tool output ───────────────────────────────────────────────────────
+# These are tool output, not source
 out/
+output/
+output/check_report.json
+release_test_set/outputs/
 out_smoke/
 out_toml/
 *.ucdb
@@ -43,6 +46,8 @@ ir.json
 .env.*
 *.env
 *.ps1
+# Allow the project release-check script to be committed.
+!scripts/release_check.ps1
 
 # ── Vivado / XSIM build artifacts ────────────────────────────────────
 *.jou
@@ -98,8 +103,6 @@ docs/internal/
 # Removed these since repo is private
 
 # Local development overrides
-pssgen.local.toml
-pssgen_state.local.toml
 .env.local
 
 # Orphaned files (see Task 1 cleanup)

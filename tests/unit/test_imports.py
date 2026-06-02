@@ -5,7 +5,7 @@ from mdnorm import checker, cli, io, models, normalizer, parser, reporter, valid
 
 
 def test_package_imports() -> None:
-    assert mdnorm.__version__ == "0.2.0"
+    assert mdnorm.__version__ == "0.2.1"
 
 
 def test_submodules_import() -> None:

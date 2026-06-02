@@ -3,7 +3,7 @@
 # PROJECT:       MD Normalizer
 # BRIEF:         Implements the advisory document-quality check rules (MDQ001-MDQ009).
 # DOCUMENT:      docs/tool_framework.md; README.md; docs/decisions/DECISIONS.md
-# REQUIREMENTS:  support-only; no formal requirement IDs assigned for v0.2.0
+# REQUIREMENTS:  support-only; no formal requirement IDs assigned for v0.2.1
 # COPYRIGHT:     Copyright (c) 2026 BelTech Systems LLC.
 # LICENSE:       MIT License; see LICENSE in repository root.
 # CLASSIFICATION: OPEN-SOURCE
@@ -24,6 +24,7 @@
 #   2026-06-02  Cursor    [FIX]  Updated _has_fence_language() to handle both ``` and ~~~ fences
 #   2026-06-02  Cursor    [FIX]  MDQ003: use hierarchy-aware scope to avoid false positives on repeated subsection names (e.g. changelog)
 #   2026-06-02  Cursor    [FIX]  MDQ004: do not fire when the next heading is a child (deeper level) of the current heading
+#   2026-06-02  Cursor    [TEST] Added fixture-based regression tests in tests/fixtures/release_docs/ for v0.2.1 hardening
 # ============================================================
 
 """Advisory document-quality checker for MD Normalizer.
