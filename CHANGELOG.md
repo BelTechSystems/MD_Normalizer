@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-06-02
+
+### Added
+
+- `scripts/release_check.ps1` repeatable PowerShell release verification script.
+- `docs/release_testing.md` release testing documentation.
+- Fixture Markdown files under `tests/fixtures/release_docs/` for checker regression testing.
+- Fixture-based pytest tests in `tests/unit/test_checker_fixtures.py`.
+- Explicit tilde-fence limitation test documenting that `~~~` blocks are not excluded from check rules.
+
+### Fixed
+
+- MDQ003 false positives: duplicate subsection names (e.g. `### Added`) under different parent sections no longer trigger the rule. Scope is now tracked per ancestor-heading context.
+- MDQ004 false positives: a heading followed immediately by a child heading (deeper level) is no longer reported as empty. Only headings at the same or higher level trigger the rule.
+- MDQ005/MDQ006 false positives in README: restructured nested Markdown examples to use separate tagged code blocks, eliminating parser confusion from 4-backtick outer fences.
+
+### Changed
+
+- `output/` added to `.gitignore` so release-check output files are not committed.
+- `scripts/release_check.ps1` explicitly excluded from the `*.ps1` gitignore pattern.
+
+### Notes
+
+- Tilde fences (`~~~`) are a known limitation: the parser does not recognise them, so their contents are not excluded from checker rules. Documented in `docs/release_testing.md`.
+- No new product commands or features added; this release is purely hardening and tooling.
+
 ## [0.2.0] - 2026-06-02
 
 ### Added
@@ -58,5 +84,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Version 0.1.0 is an early-stage baseline focused on deterministic formatting.
 - AI-assisted normalization, template enforcement, and publishing exports are out of scope for this release.
 
+[0.2.1]: https://github.com/BelTechSystems/MD_Normalizer/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/BelTechSystems/MD_Normalizer/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/BelTechSystems/MD_Normalizer/releases/tag/v0.1.0
