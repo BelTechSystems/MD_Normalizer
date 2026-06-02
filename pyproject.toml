@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "md-normalizer"
-version = "0.1.0"
+version = "0.2.0"
 description = "A structure-aware CLI that normalizes rough Markdown into clean, predictable documents."
 readme = "README.md"
 requires-python = ">=3.10"

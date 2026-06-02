@@ -1,8 +1,16 @@
 # MD Normalizer
 
-MD Normalizer is an early-stage deterministic Markdown cleanup CLI from BelTech Systems LLC. It converts rough text, copied AI output, or inconsistent Markdown into clean, predictable Markdown documents.
+MD Normalizer is a deterministic Markdown cleanup CLI from BelTech Systems LLC. It converts rough text, copied AI output, or inconsistent Markdown into clean, predictable Markdown documents.
 
-The v0.1.0 baseline is fully deterministic and does not use AI. It preserves user-authored prose and fenced code block contents exactly while applying repeatable formatting rules for spacing, list markers, and heading layout.
+The baseline is fully deterministic and does not use AI. It preserves user-authored prose and fenced code block contents exactly while applying repeatable formatting rules for spacing, list markers, and heading layout.
+
+**Command overview:**
+
+| Command | Purpose |
+| --- | --- |
+| `normalize` | Cleans Markdown formatting deterministically. |
+| `validate` | Detects structural Markdown errors (empty document, unclosed fences, malformed headings). |
+| `check` | Reports engineering-document quality findings. Advisory only — never modifies the file. |
 
 Important defaults:
 
@@ -65,6 +73,12 @@ Validate normalized output:
 mdnorm validate --in output/clean.md
 ```
 
+Check a document for quality findings:
+
+```bash
+mdnorm check --in README.md
+```
+
 Write a JSON normalization report:
 
 ```bash
@@ -88,13 +102,22 @@ mdnorm normalize --in examples/rough_notes.txt --out output/clean.md --dry-run
 
 # Validate a Markdown file
 mdnorm validate --in examples/expected_clean.md
+
+# Check a document for quality findings (advisory; does not modify the file)
+mdnorm check --in README.md
+
+# Write check findings to a JSON report
+mdnorm check --in README.md --report output/check_report.json
+
+# Exit 1 when warning-level findings are present (useful in CI)
+mdnorm check --in README.md --strict
 ```
 
 ## Example Before and After
 
 **Before** (`examples/rough_ai_output.md`):
 
-````markdown
+```markdown
 # Markdown Normalizer   
 
 AI output often looks like markdown but is not consistently formatted.
@@ -110,17 +133,16 @@ AI output often looks like markdown but is not consistently formatted.
 3. parse
 5) normalize
 7. validate
-
+```
 
 ```python
 def normalize(text: str) -> str:
     return text.strip() + "   "
 ```
-````
 
 **After** (`examples/expected_clean.md`):
 
-````markdown
+```markdown
 # Markdown Normalizer
 
 AI output often looks like markdown but is not consistently formatted.
@@ -136,12 +158,12 @@ AI output often looks like markdown but is not consistently formatted.
 1. parse
 2. normalize
 3. validate
+```
 
 ```python
 def normalize(text: str) -> str:
     return text.strip() + "   "
 ```
-````
 
 This example demonstrates:
 
@@ -152,6 +174,47 @@ This example demonstrates:
 - Exact preservation of fenced code block contents, including trailing spaces inside the block
 
 A second sample input is available at `examples/rough_notes.txt`.
+
+## Advisory Check Command
+
+`mdnorm check` analyzes a Markdown file for common engineering-document quality issues.
+It is purely advisory: it never modifies the input file, rewrites prose, or enforces templates.
+
+```bash
+# Basic check (exits 0; prints findings or "No document quality findings.")
+python -m mdnorm check --in README.md
+
+# Write findings to a JSON report
+python -m mdnorm check --in README.md --report output/check_report.json
+
+# Exit 1 when warning-level findings exist (CI gate)
+python -m mdnorm check --in README.md --strict
+```
+
+### Check Rules (v0.2.0)
+
+| Rule | Level | Trigger |
+| --- | --- | --- |
+| MDQ001 | WARNING | Missing top-level H1 heading |
+| MDQ002 | WARNING | Multiple top-level H1 headings |
+| MDQ003 | WARNING | Duplicate heading text |
+| MDQ004 | INFO | Empty section (heading followed by another heading or EOF) |
+| MDQ005 | INFO | Open task annotation outside code blocks |
+| MDQ006 | INFO | Fenced code block missing language tag |
+| MDQ007 | WARNING | Broken local Markdown link (relative path does not exist) |
+| MDQ008 | INFO | More than two consecutive blank lines outside code blocks |
+| MDQ009 | INFO | Trailing whitespace outside code block |
+
+Fenced code block contents are excluded from all applicable rules.
+
+## Version 0.2 Scope
+
+Version 0.2 adds:
+
+- `mdnorm check` advisory document-quality command
+- Nine check rules (MDQ001–MDQ009)
+- JSON check report output via `--report`
+- Strict mode via `--strict` (warning-level findings → exit 1)
 
 ## Version 0.1 Scope
 
@@ -173,7 +236,7 @@ Validation in 0.1 checks for:
 
 ## Non-Goals
 
-Version 0.1 does not include:
+The following remain out of scope:
 
 - Template enforcement
 - AI-assisted rewriting or semantic editing

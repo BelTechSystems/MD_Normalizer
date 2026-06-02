@@ -103,3 +103,56 @@ def test_mdnorm_module_validate(
     )
 
     assert result.returncode == 0, result.stderr
+
+
+def test_mdnorm_module_check(
+    src_env: dict[str, str],
+    tmp_path: Path,
+) -> None:
+    input_file = tmp_path / "doc.md"
+    input_file.write_text("# Title\n\nContent paragraph.\n", encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "mdnorm",
+            "check",
+            "--in",
+            str(input_file),
+        ],
+        capture_output=True,
+        text=True,
+        env=src_env,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "No document quality findings." in result.stdout
+
+
+def test_mdnorm_module_check_strict(
+    src_env: dict[str, str],
+    tmp_path: Path,
+) -> None:
+    # Document with no H1 heading triggers MDQ001 (WARNING); strict → exit 1.
+    input_file = tmp_path / "doc.md"
+    input_file.write_text("No heading here, just prose.\n", encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "mdnorm",
+            "check",
+            "--in",
+            str(input_file),
+            "--strict",
+        ],
+        capture_output=True,
+        text=True,
+        env=src_env,
+        check=False,
+    )
+
+    assert result.returncode == 1

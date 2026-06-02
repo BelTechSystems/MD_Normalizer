@@ -204,6 +204,137 @@ def test_normalize_report_refuses_existing_file_without_force(
     assert report_file.read_text(encoding="utf-8") == "{}"
 
 
+# ---------------------------------------------------------------------------
+# check subcommand
+# ---------------------------------------------------------------------------
+
+
+def test_check_clean_document_exits_zero(tmp_path: Path) -> None:
+    input_file = tmp_path / "doc.md"
+    input_file.write_text("# Title\n\nContent paragraph.\n", encoding="utf-8")
+
+    exit_code = main(["check", "--in", str(input_file)])
+
+    assert exit_code == 0
+
+
+def test_check_with_warnings_exits_zero_without_strict(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Document missing H1 triggers MDQ001 (WARNING) but non-strict mode exits 0.
+    input_file = tmp_path / "doc.md"
+    input_file.write_text("No heading here, just prose.\n", encoding="utf-8")
+
+    exit_code = main(["check", "--in", str(input_file)])
+
+    assert exit_code == 0
+    captured = capsys.readouterr()
+    assert "MDQ001" in captured.out
+
+
+def test_check_strict_exits_one_when_warnings_present(tmp_path: Path) -> None:
+    # MDQ001 is a WARNING; --strict should cause exit 1.
+    input_file = tmp_path / "doc.md"
+    input_file.write_text("No heading here, just prose.\n", encoding="utf-8")
+
+    exit_code = main(["check", "--in", str(input_file), "--strict"])
+
+    assert exit_code == 1
+
+
+def test_check_strict_exits_zero_when_no_warnings(tmp_path: Path) -> None:
+    input_file = tmp_path / "doc.md"
+    input_file.write_text("# Title\n\nContent paragraph.\n", encoding="utf-8")
+
+    exit_code = main(["check", "--in", str(input_file), "--strict"])
+
+    assert exit_code == 0
+
+
+def test_check_writes_json_report(tmp_path: Path) -> None:
+    input_file = tmp_path / "doc.md"
+    report_file = tmp_path / "check_report.json"
+    input_file.write_text("# Title\n\nContent paragraph.\n", encoding="utf-8")
+
+    exit_code = main(["check", "--in", str(input_file), "--report", str(report_file)])
+
+    assert exit_code == 0
+    assert report_file.exists()
+    payload = json.loads(report_file.read_text(encoding="utf-8"))
+    assert payload["tool"] == "MD Normalizer"
+    assert payload["command"] == "check"
+    assert "findings" in payload
+    assert "summary" in payload
+
+
+def test_check_report_refuses_existing_file_without_force(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    input_file = tmp_path / "doc.md"
+    report_file = tmp_path / "check_report.json"
+    input_file.write_text("# Title\n\nContent.\n", encoding="utf-8")
+    report_file.write_text("{}", encoding="utf-8")
+
+    exit_code = main(["check", "--in", str(input_file), "--report", str(report_file)])
+
+    assert exit_code == 1
+    captured = capsys.readouterr()
+    assert "Output file already exists" in captured.err
+    assert report_file.read_text(encoding="utf-8") == "{}"
+
+
+def test_check_report_overwrites_with_force(tmp_path: Path) -> None:
+    input_file = tmp_path / "doc.md"
+    report_file = tmp_path / "check_report.json"
+    input_file.write_text("# Title\n\nContent.\n", encoding="utf-8")
+    report_file.write_text("{}", encoding="utf-8")
+
+    exit_code = main(
+        ["check", "--in", str(input_file), "--report", str(report_file), "--force"]
+    )
+
+    assert exit_code == 0
+    payload = json.loads(report_file.read_text(encoding="utf-8"))
+    assert "tool" in payload
+
+
+def test_check_rejects_missing_input(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    missing = tmp_path / "missing.md"
+
+    exit_code = main(["check", "--in", str(missing)])
+
+    assert exit_code == 1
+    captured = capsys.readouterr()
+    assert "Input file not found" in captured.err
+
+
+def test_check_no_findings_message_printed(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    input_file = tmp_path / "doc.md"
+    input_file.write_text("# Title\n\nContent paragraph.\n", encoding="utf-8")
+
+    main(["check", "--in", str(input_file)])
+
+    captured = capsys.readouterr()
+    assert "No document quality findings." in captured.out
+
+
+def test_help_includes_check_subcommand(capsys: pytest.CaptureFixture[str]) -> None:
+    with pytest.raises(SystemExit) as exc_info:
+        main(["--help"])
+
+    assert exc_info.value.code == 0
+    captured = capsys.readouterr()
+    assert "check" in captured.out
+
+
 def test_validate_passes_for_clean_markdown(tmp_path: Path) -> None:
     input_file = tmp_path / "clean.md"
     input_file.write_text("# Title\n\nBody\n", encoding="utf-8")

@@ -55,3 +55,12 @@ Python source files under `src/mdnorm/` shall use structured BelTech-STD-006 sty
 
 Rationale:
 Structured headers make each module reviewable, auditable, and machine-readable. They provide consistent engineering metadata without embedding long license text in source files.
+
+## D-009: Add Advisory Document Quality Check Command
+
+MD Normalizer v0.2.0 adds `mdnorm check` as an advisory command for engineering-document quality findings.
+
+The command reads a Markdown or text file, analyzes it against nine document-hygiene rules (MDQ001–MDQ009), and emits findings as info or warning messages. It optionally writes a JSON report. It does not modify the input file, rewrite prose, or enforce templates.
+
+Rationale:
+This extends MD Normalizer into a trusted engineering artifact tool without changing the basic deterministic normalize workflow. The command reports document hygiene issues but does not modify user content. Advisory-only behavior ensures the tool can be run safely at any stage of a document's lifecycle, including in CI pipelines, without risk of unintended edits.
